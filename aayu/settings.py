@@ -42,7 +42,8 @@ PRIMARY_APPS = [
 THIRD_PARTY_APPS = []
 
 CUSTOM_APPS = [
-    'users'
+    'users',
+    'books'
 ]
 
 INSTALLED_APPS = PRIMARY_APPS + THIRD_PARTY_APPS + CUSTOM_APPS
