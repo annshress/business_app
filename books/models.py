@@ -13,7 +13,7 @@ class Publisher(models.Model):
 class Book(models.Model):
     CATEGORY_CHOICES = (
         (CATEGORY.adventure, _("adventure")),
-        (CATEGORY.horro, _("horror")),
+        (CATEGORY.horror, _("horror")),
         (CATEGORY.fiction, _("fiction")),
         (CATEGORY.science, _("science")),
         (CATEGORY.biography, _("biography"))
