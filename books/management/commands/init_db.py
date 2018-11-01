@@ -1,7 +1,6 @@
 from sys import stdout
 
 from django.core.management import BaseCommand
-from django.conf import settings
 from django.db import DEFAULT_DB_ALIAS
 from django.apps import apps as global_apps
 
@@ -29,31 +28,34 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
-        books = options.get('books', self.books)
-        users = options.get('users', self.users)
-        publishers = options.get('publishers', self.publishers)
+        books = options['books'] or self.books
+        users = options['users'] or self.users
+        publishers = options['publishers'] or self.publishers
 
-        app_config = args[0] if args else None
-        using = options.get("using", DEFAULT_DB_ALIAS)
+        # app_config = args[0] if args else None
+        # using = options.get("using", DEFAULT_DB_ALIAS)
         apps = options.get("apps", global_apps)
 
         try:
-            Book = apps.get_model('books', 'Book')
-            Publisher = apps.get_model('books', 'Publisher')
+            apps.get_model('books', 'Book')
+            apps.get_model('books', 'Publisher')
             AayuUser = apps.get_model('users', 'AayuUser')
         except LookupError:
             stdout.write("Models aren't loaded yet.")
             return
 
+        if AayuUser.objects.last():
+            AayuUserFactory.reset_sequence(AayuUser.objects.last().id + 1)
+
         pubs = PublisherFactory.create_batch(publishers)
         boks = []
         for each in range(books):
-            boks.append(BookFactory.create(publisher=pubs[each % books]))
+            boks.append(BookFactory.create(publisher=pubs[each % publishers]))
         usrs = AayuUserFactory.create_batch(users)
 
         for u in range(users):
-            u.books_bought.add(boks[:u+1])
+            usrs[u].books_bought.add(*boks[:u+1])
 
         stdout.write(f'{books} Book(s), '
-                     f'{publishers} Publication(s)'
-                     f'{users} Users successfully created.')
+                     f'{publishers} Publication(s), '
+                     f'{users} User(s) successfully created.')

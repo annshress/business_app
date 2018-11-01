@@ -6,7 +6,8 @@ from users.models import AayuUser
 
 
 class PublisherFactory(factory.DjangoModelFactory):
-    FACTORY_FOR = Publisher
+    class Meta:
+        model = Publisher
 
     name = factory.Sequence(lambda n: "EktaPub%d" % n)
     contact = factory.Sequence(lambda n: "Area%d, City%d" % (n, n))
@@ -14,7 +15,8 @@ class PublisherFactory(factory.DjangoModelFactory):
 
 
 class BookFactory(factory.DjangoModelFactory):
-    FACTORY_FOR = Book
+    class Meta:
+        model = Book
 
     isbn = factory.Sequence(lambda n: "this_a_Isbn%d" % n)
     name = factory.Sequence(lambda n: "NameBook%d" % n)
@@ -27,7 +29,8 @@ class BookFactory(factory.DjangoModelFactory):
 
 
 class AayuUserFactory(factory.DjangoModelFactory):
-    FACTORY_FOR = AayuUser
+    class Meta:
+        model = AayuUser
 
     username = factory.Sequence(lambda n: "username%d" % n)
     first_name = factory.Sequence(lambda n: "First%d" % n)
