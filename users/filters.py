@@ -4,12 +4,15 @@ from users.models import AayuUser as User
 
 
 class UserFilter(filters.FilterSet):
-    o = filters.OrderingFilter(
+    ordering_a = filters.OrderingFilter(
         fields=(
             ('username', 'a'),
-            ('name', 'b'),
-            ('is_active', 'c'),
-            ('age', 'd'),
+        )
+    )
+
+    ordering_b = filters.OrderingFilter(
+        fields=(
+            ('date_joined', 'b'),
         )
     )
 

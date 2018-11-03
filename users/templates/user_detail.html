@@ -6,19 +6,19 @@
 {% endblock %}
 
 {% block content %}
+    <h4> User Details </h4>
+    <p>
+        {{ object.username }}<br>
+        {{ object.first_name }} {{ object.last_name }}<br>
+        {{ object.is_active }}<br>
+        {{ object.date_joined | timesince }}<br>
+    </p>
 
-<p>
-    {{ object.username }}<br>
-    {{ object.first_name }} {{ object.last_name }}<br>
-    {{ object.is_active }}<br>
-    {{ object.date_joined | timesince }}<br>
-</p>
-
-<hr>
-    Some Stastistics
+    <hr>
+    <u>Some Stastistics</u>
     <table>
     <tr>
-        <td>Average, spent on one book</td>
+        <td>Average, spent on a book</td>
         <td>{{ object.books_bought_average_price }}</td>
     </tr>
     <tr>

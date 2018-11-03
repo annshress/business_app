@@ -7,7 +7,6 @@ from django.contrib.auth.models import AbstractUser
 from django.db.models.aggregates import Avg, Min, Max, Count
 
 from books.models import Book
-from books.utils import CATEGORY
 
 IMG_PATH = os.path.join('aayu', 'users')
 

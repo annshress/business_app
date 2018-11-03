@@ -2,6 +2,10 @@
 
 {% block title %}User Profile{% endblock %}
 
+{% block header %}
+    {{ block.super }} Users
+{% endblock %}
+
 {% block breadcrumb %}
     <li>Users</li>
 {% endblock %}
@@ -18,25 +22,32 @@
 {% endblock %}
 
 {% block content %}
-    <table>
-        <thead>
-        <td><span class="ordering" id="oa">Username</span></td>
-        <td><span class="ordering" id="ob">Name</span></td>
-        <td><span class="ordering" id="oc">Active</span></td>
-        <td><span class="ordering" id="od">Profile age</span></td>
-        </thead>
-    {% for obj in object_list %}
-        <tr>
-            <td><a href={{ obj.get_absolute_url }}>{{ obj.username }}</a><br></td>
-            <td>{{ obj.get_full_name | title }}<br></td>
-            <td>{{ obj.is_active }}<br></td>
-            <td>{{ obj.date_joined | timesince }} ago<br></td>
-        </tr>
-    {% endfor %}
+    <input id="username_filter" placeholder="Filter by username"
+           type="text">
+    <button onclick="searchUsername()">Search</button>
+    {% if object_list %}
+        <table>
+            <thead>
+            <td><span class="ordering" onclick="orderChange('a')">Username</span></td>
+            <td><span class="ordering" onclick="">Name</span></td>
+            <td><span class="ordering" onclick="">Active</span></td>
+            <td><span class="ordering" onclick="orderChange('b')">Profile age</span></td>
+            </thead>
+            {% for obj in object_list %}
+                <tr>
+                    <td><a href={{ obj.get_absolute_url }}>{{ obj.username }}</a><br></td>
+                    <td>{{ obj.get_full_name | title }}<br></td>
+                    <td>{{ obj.is_active }}<br></td>
+                    <td>{{ obj.date_joined | timesince }} ago<br></td>
+                </tr>
+            {% endfor %}
+    {% else %}
+        <p><strong>Wow, such empty.</strong></p>
+    {% endif %}
     </table>
 
     <p>
-    <form id="filter"> hidden
+    <form id="filter" hidden>
         {{ filter.form }}
         <button type="submit">Submit</button>
     </form>
@@ -45,7 +56,29 @@
 
 {% block scripts %}
     <script>
+    var form = $('#filter');
+    var curr = {};
+    curr.a = '{{ ordering_a }}';
+    curr.b = '{{ ordering_b }}';
+    curr.a = (curr.a === 'None')?undefined:curr.a;
+    curr.b = (curr.b === 'None')?undefined:curr.b;
 
+    function orderChange(attr) {
+        curr[attr] = curr[attr]?curr[attr]:attr;
+        if (curr[attr].indexOf("-") >= 0){
+            curr[attr] = curr[attr].slice(1)
+        } else {
+            curr[attr] = "-" + curr[attr]
+        }
+        $('#id_ordering_'+attr).val(curr[attr]);
+        form.submit();
+    }
+
+    function searchUsername() {
+        var q = $('#username_filter').val();
+        $('#id_username__icontains').val(q);
+        form.submit();
+    }
     </script>
 
 {% endblock %}
