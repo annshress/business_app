@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}{{ obj.name }}{% endblock %}
+{% block breadcrumb %}
+    <li>Books</li>
+{% endblock %}
+{% block content %}
+    <table>
+        <thead>
+        <td>Name</td>
+        <td>ISBN</td>
+        <td>Pages</td>
+        <td>Price</td>
+        <td>Category</td>
+        </thead>
+    {% for obj in object_list %}
+        <tr>
+            <td><a href={{ obj.get_absolute_url }}>{{ obj.name }}</a></td>
+            <td>ISBN: {{ obj.isbn }}</td>
+            <td>{{ obj.pages }} pages</td>
+            <td>Rs. {{ obj.price }}</td>
+            <td>{{ obj.get_category_display }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

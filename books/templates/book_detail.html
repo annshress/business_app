@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}{{ object.name }}{% endblock %}
+{% block breadcrumb %}
+    <span><a href={{ object.get_list_absolute_url }}>Books</a></span>
+    > <span>{{ object.name }}</span>
+{% endblock %}
+{% block content %}
+    {{ object.name }}<br>
+    {{ object.isbn }}<br>
+    NRs {{ object.pages }}<br>
+    {{ object.get_category_display | title }}<br>
+    Sold {{ sold }} copies<br>
+{% endblock %}
