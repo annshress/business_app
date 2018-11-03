@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}{{ object.username }}{% endblock %}
+{% block breadcrumb %}
+    <span><a href={{ object.get_list_absolute_url }}>Users</a></span>
+    > <span>{{ object.username }}</span>
+{% endblock %}
+
+{% block content %}
+
+<p>
+    {{ object.username }}<br>
+    {{ object.first_name }} {{ object.last_name }}<br>
+    {{ object.is_active }}<br>
+    {{ object.date_joined | timesince }}<br>
+</p>
+
+<hr>
+    Some Stastistics
+    <table>
+    <tr>
+        <td>Average, spent on one book</td>
+        <td>{{ object.books_bought_average_price }}</td>
+    </tr>
+    <tr>
+        <td>Most, spent on a book</td>
+        <td>{{ object.books_bought_maximum_price }}</td>
+    </tr>
+    <tr>
+        <td>Least, spent on a book:</td>
+        <td>{{ object.books_bought_minimum_price }}</td>
+    </tr>
+    <tr>
+        <td>Number of books bought</td>
+        <td>{{ object.books_bought_count }}</td>
+    </tr>
+    <tr>
+        <td>Highest spent on a Book</td>
+        <td><a href="{{ object.costliest_bought_book.get_absolute_url }}">{{ object.costliest_bought_book }}</a></td>
+    </tr>
+    <tr>
+        <td>Least spent on a Book</td>
+        <td><a href="{{ object.costliest_bought_book.get_absolute_url }}">{{ object.cheapest_bought_book }}</a></td>
+    </tr>
+    <tr>
+        <td>Loves to spend on</td>
+        <td>{{ object.loved_category | title }}</td>
+    </tr>
+    </table>
+
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}User Profile{% endblock %}
+
+{% block breadcrumb %}
+    <li>Users</li>
+{% endblock %}
+
+{% block styles %}
+    <style>
+    .ordering{
+        cursor: pointer;
+    }
+    .ordering:hover {
+        color: cadetblue;
+    }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <table>
+        <thead>
+        <td><span class="ordering" id="oa">Username</span></td>
+        <td><span class="ordering" id="ob">Name</span></td>
+        <td><span class="ordering" id="oc">Active</span></td>
+        <td><span class="ordering" id="od">Profile age</span></td>
+        </thead>
+    {% for obj in object_list %}
+        <tr>
+            <td><a href={{ obj.get_absolute_url }}>{{ obj.username }}</a><br></td>
+            <td>{{ obj.get_full_name | title }}<br></td>
+            <td>{{ obj.is_active }}<br></td>
+            <td>{{ obj.date_joined | timesince }} ago<br></td>
+        </tr>
+    {% endfor %}
+    </table>
+
+    <p>
+    <form id="filter"> hidden
+        {{ filter.form }}
+        <button type="submit">Submit</button>
+    </form>
+    </p>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+
+    </script>
+
+{% endblock %}
