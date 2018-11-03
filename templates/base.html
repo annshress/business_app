@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
+    <header>
+        <h3>{% block header %}Lorem Ipsum{% endblock %}</h3>
+    </header>
     {% block styles %}
     {% endblock %}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous">
+    </script>
 </head>
 <body>
     <div class="nav">
@@ -43,7 +50,8 @@
     </div>
 </body>
 <footer>
-    MIT License 2018
+    <p>MIT License 2018</p>
+    <p>Contact information: <a href="mailto:anish.shrestha@mailinator.com">Anish Shrestha</a>.</p>
 </footer>
 {% block scripts %}{% endblock %}
 </html>
