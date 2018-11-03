@@ -1,6 +1,6 @@
 from django.core.validators import MinValueValidator
 from django.db import models
-from django.db.models.aggregates import Avg, Min, Max
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import RegexValidator
 
@@ -75,9 +75,20 @@ class Book(models.Model):
         on_delete=models.CASCADE,
         related_name="books"
     )
-    bought_by = models.ManyToManyField("users.AayuUser", related_name="books_bought")
+    bought_by = models.ManyToManyField("users.AayuUser",
+                                       related_name="books_bought")
+
+    @classmethod
+    def get_category(cls, ind):
+        return list(filter(lambda x: x[0] == ind, cls.CATEGORY_CHOICES))[0][1]
 
     objects = BookManager()
+
+    def get_absolute_url(self):
+        return reverse("books:detail", kwargs=dict(pk=self.pk))
+
+    def get_list_absolute_url(self):
+        return reverse("books:list")
 
     def __str__(self):
         return f"{self.name} {self.publisher.name}"
