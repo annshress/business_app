@@ -35,7 +35,7 @@ class AayuUser(AbstractUser):
 
     def get_books_bought(self, category=None):
         q = self.books_bought.all()
-        if category:
+        if category is not None:
             q = q.filter(category=category)
         if not q.exists():
             raise ValueError
