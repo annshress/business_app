@@ -18,10 +18,15 @@
     * Maximum (e.g. most expensive book bought by the user)
     * Count (e.g. number of books bought by the user)
     * etc. (*most loved category by the user*)
-
+    
 
 **Auth**
 
 username: aayu
 
 password: adminadmin
+
+
+**If using different database,** initialize with dummy data:
+
+`python manage.py init_db`
