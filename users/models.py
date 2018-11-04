@@ -36,32 +36,55 @@ class AayuUser(AbstractUser):
     def get_books_bought(self, category=None):
         q = self.books_bought.all()
         if category:
-            return q.filter(category=category)
+            q = q.filter(category=category)
+        if not q.exists():
+            raise ValueError
         return q
 
     def books_bought_average_price(self, category=None):
-        return "%.2f" % self.get_books_bought(category=category).aggregate(avg_price=Avg('price'))['avg_price']
+        try:
+            return "%.2f" % self.get_books_bought(category=category).aggregate(avg_price=Avg('price'))['avg_price']
+        except ValueError:
+            return 0
 
     def books_bought_minimum_price(self, category=None):
-        return "%.2f" % self.get_books_bought(category=category).aggregate(min_price=Min('price'))['min_price']
+        try:
+            return "%.2f" % self.get_books_bought(category=category).aggregate(min_price=Min('price'))['min_price']
+        except ValueError:
+            return 0
 
     def books_bought_maximum_price(self, category=None):
-        return "%.2f" % self.get_books_bought(category=category).aggregate(max_price=Max('price'))['max_price']
+        try:
+            return "%.2f" % self.get_books_bought(category=category).aggregate(max_price=Max('price'))['max_price']
+        except ValueError:
+            return 0
 
     def costliest_bought_book(self, category=None):
-        return self.get_books_bought(category=category).order_by('price').last()
+        try:
+            return self.get_books_bought(category=category).order_by('price').last()
+        except ValueError:
+            return
 
     def cheapest_bought_book(self, category=None):
-        return self.get_books_bought(category=category).order_by('-price').last()
+        try:
+            return self.get_books_bought(category=category).order_by('-price').last()
+        except ValueError:
+            return
 
     def books_bought_count(self, category=None):
-        return self.get_books_bought(category=category).count()
+        try:
+            return self.get_books_bought(category=category).count()
+        except ValueError:
+            return 0
 
     def loved_category(self):
-        loved = self.get_books_bought().\
-            values('category').annotate(cat_count=Count('category')).\
-            values('category', 'cat_count').order_by('-cat_count')[0]['category']
-        loved = Book.get_category(loved)
+        try:
+            loved = self.get_books_bought().\
+                values('category').annotate(cat_count=Count('category')).\
+                values('category', 'cat_count').order_by('-cat_count')[0]['category']
+            loved = Book.get_category(loved)
+        except ValueError:
+            return
         return loved
 
     class Meta:

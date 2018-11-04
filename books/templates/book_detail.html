@@ -5,9 +5,14 @@
     > <span>{{ object.name }}</span>
 {% endblock %}
 {% block content %}
-    {{ object.name }}<br>
-    {{ object.isbn }}<br>
-    NRs {{ object.pages }}<br>
-    {{ object.get_category_display | title }}<br>
-    Sold {{ sold }} copies<br>
+    <h4>Book Details </h4>
+    <p>
+        <address>
+        <strong>{{ object.name }}</strong><br>
+        ISBN: {{ object.isbn }}<br>
+        Pages: NRs {{ object.pages }}<br>
+        Category: {{ object.get_category_display | title }}<br>
+        {{ sold }} copies sold<br>
+        </address>
+    </p>
 {% endblock %}

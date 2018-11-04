@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <header>
+        <h3>{% block header %}Lorem Ipsum{% endblock %}</h3>
+    </header>
+    {% block styles %}{% endblock %}
+    {#    jQuery cdn #}
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous">
+    </script>
+
+    {# bootstrap cdn    #}
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="nav">
+        {% block navbar %}
+            <a href={% url "users:list" %}>Users</a>
+            <a href={% url "books:list" %}>Books</a>
+        {% endblock %}
+    </div>
+    <br>
+    <div class="breadcrumbs">
+        {% block breadcrumb %}{% endblock %}
+    </div>
+    <br>
+    <div class="content">
+        {% block content %}{% endblock %}
+    </div>
+    <br>
+    <div>
+        {% if is_paginated %}
+            <ul class="paginator">
+                <li><a href="?{{ request.GET.urlencode }}&page=1">First</a></li>
+                {% if page_obj.has_previous %}
+                    <li><a href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                    <li class="disabled"><span>&laquo;</span></li>
+                {% endif %}
+                <li class="active"><span>{{ page_obj.number }} of {{ paginator.num_pages }}</span></li>
+                {% if page_obj.has_next %}
+                    <li><a href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                    <li class="disabled"><span>&raquo;</span></li>
+                {% endif %}
+                <li><a href="?{{ request.GET.urlencode }}&page={{ paginator.num_pages }}">Last</a></li>
+            </ul>
+        {% endif %}
+    </div>
+</body>
+<footer>
+    <p>MIT License 2018</p>
+    <p>Contact information: <a href="mailto:anish.shrestha@mailinator.com">Anish Shrestha</a>.</p>
+</footer>
+{% block scripts %}{% endblock %}
+</html>

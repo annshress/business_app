@@ -1,50 +1,59 @@
 {% extends 'base.html' %}
 {% block title %}{{ object.username }}{% endblock %}
 {% block breadcrumb %}
-    <span><a href={{ object.get_list_absolute_url }}>Users</a></span>
-    > <span>{{ object.username }}</span>
+    <li><a href={{ object.get_list_absolute_url }}>Users</a></li>
+    <li class="active">{{ object.username }}</li>
 {% endblock %}
 
 {% block content %}
     <h4> User Details </h4>
     <p>
-        {{ object.username }}<br>
-        {{ object.first_name }} {{ object.last_name }}<br>
-        {{ object.is_active }}<br>
-        {{ object.date_joined | timesince }}<br>
+    <address>
+    <strong>{{ object.first_name | default:"No Name" }} {{ object.last_name }}</strong>
+        {% if object.is_active %}
+          &#9989
+        {% else %}
+          &#10060
+        {% endif %}
+        <br>
+    {{ object.username }}<br>
+    <abbr title="Time elapsed since joined">Since:</abbr> {{ object.date_joined | timesince }}
+    </address>
     </p>
 
-    <hr>
-    <u>Some Stastistics</u>
-    <table>
-    <tr>
-        <td>Average, spent on a book</td>
-        <td>{{ object.books_bought_average_price }}</td>
-    </tr>
-    <tr>
-        <td>Most, spent on a book</td>
-        <td>{{ object.books_bought_maximum_price }}</td>
-    </tr>
-    <tr>
-        <td>Least, spent on a book:</td>
-        <td>{{ object.books_bought_minimum_price }}</td>
-    </tr>
-    <tr>
-        <td>Number of books bought</td>
-        <td>{{ object.books_bought_count }}</td>
-    </tr>
-    <tr>
-        <td>Highest spent on a Book</td>
-        <td><a href="{{ object.costliest_bought_book.get_absolute_url }}">{{ object.costliest_bought_book }}</a></td>
-    </tr>
-    <tr>
-        <td>Least spent on a Book</td>
-        <td><a href="{{ object.costliest_bought_book.get_absolute_url }}">{{ object.cheapest_bought_book }}</a></td>
-    </tr>
-    <tr>
-        <td>Loves to spend on</td>
-        <td>{{ object.loved_category | title }}</td>
-    </tr>
+    <p><u>Some Stastistics</u></p>
+
+    <table class="table table-borderless">
+    <tbody>
+        <tr>
+            <th scope="col">Average, spent on a book</th>
+            <td scope="col">NRs. {{ object.books_bought_average_price }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Most, spent on a book</th>
+            <td scope="col">NRs. {{ object.books_bought_maximum_price }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Least, spent on a book:</th>
+            <td scope="col">NRs. {{ object.books_bought_minimum_price }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Number of books bought</th>
+            <td scope="col">{{ object.books_bought_count }}</td>
+        </tr>
+        <tr>
+            <th scope="col">Highest spent on a Book</th>
+            <td scope="col"><a href="{{ object.costliest_bought_book.get_absolute_url }}">{{ object.costliest_bought_book }}</a></td>
+        </tr>
+        <tr>
+            <th scope="col">Least spent on a Book</th>
+            <td scope="col"><a href="{{ object.costliest_bought_book.get_absolute_url }}">{{ object.cheapest_bought_book }}</a></td>
+        </tr>
+        <tr>
+            <th scope="col">Loves to spend on</th>
+            <td scope="col">{{ object.loved_category | title }}</td>
+        </tr>
+    </tbody>
     </table>
 
 {% endblock %}

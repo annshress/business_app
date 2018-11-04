@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block breadcrumb %}
-    <li>Users</li>
+    <li class="active">Users</li>
 {% endblock %}
 
 {% block styles %}
@@ -22,29 +22,36 @@
 {% endblock %}
 
 {% block content %}
-    <input id="username_filter" placeholder="Filter by username"
-           type="text">
-    <button onclick="searchUsername()">Search</button>
+    <div class="input-group mb-3">
+        <input type="text" class="form-control" id="username_filter" placeholder="Username" aria-label="Username">
+    </div>
+
     {% if object_list %}
-        <table>
-            <thead>
-            <td><span class="ordering" onclick="orderChange('a')">Username</span></td>
-            <td><span class="ordering" onclick="">Name</span></td>
-            <td><span class="ordering" onclick="">Active</span></td>
-            <td><span class="ordering" onclick="orderChange('b')">Profile age</span></td>
-            </thead>
-            {% for obj in object_list %}
+        <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
                 <tr>
-                    <td><a href={{ obj.get_absolute_url }}>{{ obj.username }}</a><br></td>
-                    <td>{{ obj.get_full_name | title }}<br></td>
-                    <td>{{ obj.is_active }}<br></td>
-                    <td>{{ obj.date_joined | timesince }} ago<br></td>
+                  <th><span class="ordering" onclick="orderChange('a')">Username</span></th>
+                  <th><span class="ordering" onclick="">Name</span></th>
+                  <th><span class="ordering" onclick="">Active</span></th>
+                  <th><span class="ordering" onclick="orderChange('b')">Profile age</span></th>
                 </tr>
-            {% endfor %}
+              </thead>
+              <tbody>
+              {% for obj in object_list %}
+                <tr>
+                  <td><a href={{ obj.get_absolute_url }}>{{ obj.username }}</a><br></td>
+                  <td>{{ obj.get_full_name | title }}<br></td>
+                  <td>{{ obj.is_active }}<br></td>
+                  <td>{{ obj.date_joined | timesince }} ago<br></td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          </div>
     {% else %}
         <p><strong>Wow, such empty.</strong></p>
     {% endif %}
-    </table>
 
     <p>
     <form id="filter" hidden>
@@ -73,9 +80,18 @@
         $('#id_ordering_'+attr).val(curr[attr]);
         form.submit();
     }
+    var username = $("#username_filter");
 
+    username.on('keyup', function (e) {
+        if (e.keyCode === 13) {
+            searchUsername()
+        }
+    });
+
+    {#    initialize the custom search field#}
+    username.val($('#id_username__icontains').val());
     function searchUsername() {
-        var q = $('#username_filter').val();
+        var q = username.val();
         $('#id_username__icontains').val(q);
         form.submit();
     }

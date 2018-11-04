@@ -9,7 +9,7 @@ from users.models import AayuUser as User
 class UsersListView(ListView):
     template_name = "user_list.html"
     queryset = User.objects.all().order_by('id')
-    paginate_by = 1
+    paginate_by = 2
 
     def get_queryset(self):
         return UserFilter(
