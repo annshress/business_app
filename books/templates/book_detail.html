@@ -9,9 +9,9 @@
     <p>
         <address>
         <strong>{{ object.name }}</strong><br>
-        ISBN: {{ object.isbn }}<br>
-        Pages: NRs {{ object.pages }}<br>
-        Category: {{ object.get_category_display | title }}<br>
+        <u>ISBN: </u>{{ object.isbn }}<br>
+        <u>Pages: </u>NRs {{ object.pages }}<br>
+        <u>Category: </u>{{ object.get_category_display | title }}<br>
         {{ sold }} copies sold<br>
         </address>
     </p>
