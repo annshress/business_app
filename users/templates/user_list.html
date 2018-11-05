@@ -65,19 +65,15 @@
     <script>
     var form = $('#filter');
     var curr = {};
-    curr.a = '{{ ordering_a }}';
-    curr.b = '{{ ordering_b }}';
-    curr.a = (curr.a === 'None')?undefined:curr.a;
-    curr.b = (curr.b === 'None')?undefined:curr.b;
+    curr = '{{ ordering_a }}';
+    curr = (curr === 'None')?undefined:curr;
 
     function orderChange(attr) {
-        curr[attr] = curr[attr]?curr[attr]:attr;
-        if (curr[attr].indexOf("-") >= 0){
-            curr[attr] = curr[attr].slice(1)
-        } else {
-            curr[attr] = "-" + curr[attr]
+        curr = (curr === attr)?'-'+curr:attr;
+        if (curr.indexOf("--") >= 0) {
+            curr = curr.slice(2);
         }
-        $('#id_ordering_'+attr).val(curr[attr]);
+        $('#id_ordering_a').val(curr);
         form.submit();
     }
     var username = $("#username_filter");

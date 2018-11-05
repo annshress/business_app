@@ -7,14 +7,15 @@ class UserFilter(filters.FilterSet):
     ordering_a = filters.OrderingFilter(
         fields=(
             ('username', 'a'),
-        )
-    )
-
-    ordering_b = filters.OrderingFilter(
-        fields=(
             ('date_joined', 'b'),
         )
     )
+
+    # ordering_b = filters.OrderingFilter(
+    #     fields=(
+    #         ('date_joined', 'b'),
+    #     )
+    # )
 
     class Meta:
         model = User

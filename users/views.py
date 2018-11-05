@@ -21,7 +21,7 @@ class UsersListView(ListView):
         context = super(UsersListView, self).get_context_data(*args, **kwargs)
         context['filter'] = UserFilter(data=self.request.GET)
         context['ordering_a'] = self.request.GET.get('ordering_a')
-        context['ordering_b'] = self.request.GET.get('ordering_b')
+        # context['ordering_b'] = self.request.GET.get('ordering_b')
         if 'page' in self.request.GET:
             request_clone = copy(self.request)
             request_clone.GET._mutable = True
