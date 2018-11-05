@@ -57,7 +57,7 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
             <li><a href={% url "users:list" %}>Dashboard</a></li>
-            <li><a href="admin/">Admin Site</a></li>
+            <li><a href="/admin/">Admin Site</a></li>
             <li><a href="#">Help</a></li>
           </ul>
           <form class="navbar-form navbar-right">
@@ -105,14 +105,7 @@
             {% endif %}
           </div>
 
-          <footer>
-            <div>
-                <br>
-                <br>
-                <br>
-                <span class="text-muted">Contact information: <a href="mailto:anish.shrestha@mailinator.com">Anish Shrestha</a>.</span>
-            </div>
-          </footer>
+        {% include 'footer.html' %}
 
         </div>
       </div>
