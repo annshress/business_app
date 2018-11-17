@@ -55,3 +55,6 @@ class TestUserModel(TestCase):
     def test_009_loved_category(self):
         self.assertEqual(self.user.loved_category(),
                          Book.get_category(self.cat1))
+
+    def test_010_fails(self):
+        self.fail('for test purpose')
